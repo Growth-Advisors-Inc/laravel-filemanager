@@ -4,6 +4,7 @@ namespace UniSharp\LaravelFilemanager\Controllers;
 
 use UniSharp\LaravelFilemanager\Events\FolderIsCreating;
 use UniSharp\LaravelFilemanager\Events\FolderWasCreated;
+use Illuminate\Support\Str;
 
 class FolderController extends LfmController
 {
@@ -40,7 +41,7 @@ class FolderController extends LfmController
      */
     public function getAddfolder()
     {
-        $folder_name = $this->helper->input('name');
+        $folder_name = Str::slug($this->helper->input('name'));
 
         $new_path = $this->lfm->setName($folder_name)->path('absolute');
 
