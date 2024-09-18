@@ -3,6 +3,7 @@
 namespace UniSharp\LaravelFilemanager;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LfmItem
@@ -110,7 +111,14 @@ class LfmItem
 
     public function time()
     {
-        return $this->lfm->lastModified();
+        $disk = Storage::disk($this->helper->config('disk'));
+        $path = $this->path('storage');
+
+        try {
+            return $disk->lastModified($path) ?: null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     public function thumbUrl()
