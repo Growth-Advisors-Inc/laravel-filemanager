@@ -3,6 +3,7 @@
 namespace UniSharp\LaravelFilemanager\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use UniSharp\LaravelFilemanager\Events\FolderIsRenaming;
 use UniSharp\LaravelFilemanager\Events\FolderWasRenamed;
 use UniSharp\LaravelFilemanager\Events\FileIsRenaming;
@@ -15,7 +16,7 @@ class RenameController extends LfmController
     public function getRename()
     {
         $old_name = $this->helper->input('file');
-        $new_name = $this->helper->input('new_name');
+        $new_name = Str::slug($this->helper->input('new_name'));
 
         $file = $this->lfm->setName($old_name);
 
